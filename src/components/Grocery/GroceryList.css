@@ -1,0 +1,164 @@
+.grocery-list-page {
+  padding: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.grocery-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.grocery-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.grocery-week {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+}
+
+.grocery-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.grocery-progress {
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--color-secondary);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-success);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+}
+
+.grocery-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--color-text-light);
+}
+
+.grocery-empty p {
+  margin: 0 0 0.5rem;
+}
+
+.grocery-empty-hint {
+  font-size: 0.875rem;
+}
+
+.grocery-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.grocery-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  transition: all 0.2s;
+}
+
+.grocery-item:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.grocery-item.checked {
+  opacity: 0.5;
+}
+
+.grocery-item.checked .grocery-item-text {
+  text-decoration: line-through;
+}
+
+.grocery-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  color: white;
+}
+
+.grocery-checkbox:hover {
+  border-color: var(--color-primary);
+}
+
+.grocery-item.checked .grocery-checkbox {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.grocery-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.grocery-item-text {
+  display: block;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.grocery-item-sources {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  margin-top: 0.25rem;
+}
+
+.grocery-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  color: var(--color-text-light);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.grocery-remove:hover {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.grocery-footer {
+  padding-top: 1rem;
+  display: flex;
+  justify-content: center;
+}

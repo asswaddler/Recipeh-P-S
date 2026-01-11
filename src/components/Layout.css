@@ -1,0 +1,19 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.app-main {
+  flex: 1;
+  padding-bottom: calc(70px + env(safe-area-inset-bottom));
+}
+
+/* Desktop: account for top nav */
+@media (min-width: 768px) {
+  .app-main {
+    padding-top: 70px;
+    padding-bottom: 0;
+  }
+}
