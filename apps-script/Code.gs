@@ -123,7 +123,8 @@ function getRecipes() {
 
 /**
  * Get ingredients catalogue from the Ingredients sheet
- * Expected format: Major category headers in column A, minor category headers in row 1
+ * Expected format: Column headers contain "Major - Minor" (e.g., "Fresh - Meat (fresh)")
+ * Items are listed in rows under each column
  */
 function getIngredientsCatalogue() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.INGREDIENTS);
@@ -138,38 +139,49 @@ function getIngredientsCatalogue() {
 
   if (data.length < 2) return catalogue;
 
-  // Header row contains minor categories
+  // Header row contains category info in format "Major - Minor"
   const headers = data[0];
-  let currentMajor = 'Fresh';
 
-  // Process each row
+  // Parse headers to determine major/minor categories for each column
+  const columnCategories = headers.map(function(header) {
+    const headerStr = String(header).trim();
+    if (!headerStr) return null;
+
+    // Parse "Fresh - Meat (fresh)" format
+    const dashIndex = headerStr.indexOf(' - ');
+    if (dashIndex === -1) return null;
+
+    const major = headerStr.substring(0, dashIndex).trim();
+    const minor = headerStr.substring(dashIndex + 3).trim();
+
+    // Validate major category
+    if (major !== 'Fresh' && major !== 'Pantry' && major !== 'Freezer') {
+      return null;
+    }
+
+    return { major: major, minor: minor };
+  });
+
+  // Process each data row (skip header)
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
-
-    // Check if this is a major category header
-    const firstCell = String(row[0]).trim();
-    if (firstCell === 'Fresh' || firstCell === 'Pantry' || firstCell === 'Freezer') {
-      currentMajor = firstCell;
-      continue;
-    }
 
     // Process items in each column
     for (let j = 0; j < row.length; j++) {
       const item = String(row[j]).trim();
-      if (!item || j === 0 && !headers[j]) continue;
+      const category = columnCategories[j];
 
-      const minorCategory = headers[j] || 'Other';
+      if (!item || !category) continue;
 
-      if (!catalogue[currentMajor][minorCategory]) {
-        catalogue[currentMajor][minorCategory] = [];
+      // Initialize the minor category array if needed
+      if (!catalogue[category.major][category.minor]) {
+        catalogue[category.major][category.minor] = [];
       }
 
-      if (item) {
-        catalogue[currentMajor][minorCategory].push({
-          id: `${currentMajor}-${minorCategory}-${i}-${j}`,
-          name: item
-        });
-      }
+      catalogue[category.major][category.minor].push({
+        id: category.major + '-' + category.minor + '-' + i + '-' + j,
+        name: item
+      });
     }
   }
 

@@ -471,47 +471,60 @@ export function getMockData(weekId: string) {
     }
   ];
 
+  // Mock catalogue matching the new column header format
+  // Headers are like "Fresh - Meat (fresh)", "Pantry - Grains, rice, pasta & noodles", etc.
   const mockCatalogue: IngredientsCatalogue = {
     Fresh: {
-      'Meat (Red)': [
-        { id: 'fresh-meat-1', name: 'Ground Beef', majorCategory: 'Fresh', minorCategory: 'Meat (Red)' },
-        { id: 'fresh-meat-2', name: 'Beef Steak', majorCategory: 'Fresh', minorCategory: 'Meat (Red)' }
+      'Meat (fresh)': [
+        { id: 'fresh-meat-1', name: 'Ground Beef', majorCategory: 'Fresh', minorCategory: 'Meat (fresh)' },
+        { id: 'fresh-meat-2', name: 'Beef Steak', majorCategory: 'Fresh', minorCategory: 'Meat (fresh)' }
       ],
-      'Meat (Poultry)': [
-        { id: 'fresh-poultry-1', name: 'Chicken Breast', majorCategory: 'Fresh', minorCategory: 'Meat (Poultry)' },
-        { id: 'fresh-poultry-2', name: 'Chicken Thighs', majorCategory: 'Fresh', minorCategory: 'Meat (Poultry)' }
+      'Poultry (fresh)': [
+        { id: 'fresh-poultry-1', name: 'Chicken Breast', majorCategory: 'Fresh', minorCategory: 'Poultry (fresh)' },
+        { id: 'fresh-poultry-2', name: 'Chicken Thighs', majorCategory: 'Fresh', minorCategory: 'Poultry (fresh)' }
       ],
-      'Vegetable': [
-        { id: 'fresh-veg-1', name: 'Tomatoes', majorCategory: 'Fresh', minorCategory: 'Vegetable' },
-        { id: 'fresh-veg-2', name: 'Onions', majorCategory: 'Fresh', minorCategory: 'Vegetable' },
-        { id: 'fresh-veg-3', name: 'Garlic', majorCategory: 'Fresh', minorCategory: 'Vegetable' }
+      'Fresh vegetables': [
+        { id: 'fresh-veg-1', name: 'Tomatoes', majorCategory: 'Fresh', minorCategory: 'Fresh vegetables' },
+        { id: 'fresh-veg-2', name: 'Onions', majorCategory: 'Fresh', minorCategory: 'Fresh vegetables' },
+        { id: 'fresh-veg-3', name: 'Garlic', majorCategory: 'Fresh', minorCategory: 'Fresh vegetables' }
       ],
-      'Fruit': [
-        { id: 'fresh-fruit-1', name: 'Oranges', majorCategory: 'Fresh', minorCategory: 'Fruit' },
-        { id: 'fresh-fruit-2', name: 'Apples', majorCategory: 'Fresh', minorCategory: 'Fruit' }
+      'Fresh fruit': [
+        { id: 'fresh-fruit-1', name: 'Oranges', majorCategory: 'Fresh', minorCategory: 'Fresh fruit' },
+        { id: 'fresh-fruit-2', name: 'Apples', majorCategory: 'Fresh', minorCategory: 'Fresh fruit' }
+      ],
+      'Dairy & dips': [
+        { id: 'fresh-dairy-1', name: 'Milk', majorCategory: 'Fresh', minorCategory: 'Dairy & dips' },
+        { id: 'fresh-dairy-2', name: 'Butter', majorCategory: 'Fresh', minorCategory: 'Dairy & dips' }
       ]
     },
     Pantry: {
-      'Pasta & Grains': [
-        { id: 'pantry-pasta-1', name: 'Spaghetti', majorCategory: 'Pantry', minorCategory: 'Pasta & Grains' },
-        { id: 'pantry-pasta-2', name: 'Rice', majorCategory: 'Pantry', minorCategory: 'Pasta & Grains' }
+      'Grains, rice, pasta & noodles': [
+        { id: 'pantry-pasta-1', name: 'Spaghetti', majorCategory: 'Pantry', minorCategory: 'Grains, rice, pasta & noodles' },
+        { id: 'pantry-pasta-2', name: 'Rice', majorCategory: 'Pantry', minorCategory: 'Grains, rice, pasta & noodles' }
       ],
-      'Canned Goods': [
-        { id: 'pantry-canned-1', name: 'Diced Tomatoes', majorCategory: 'Pantry', minorCategory: 'Canned Goods' },
-        { id: 'pantry-canned-2', name: 'Coconut Milk', majorCategory: 'Pantry', minorCategory: 'Canned Goods' }
+      'Tinned goods': [
+        { id: 'pantry-tinned-1', name: 'Diced Tomatoes', majorCategory: 'Pantry', minorCategory: 'Tinned goods' },
+        { id: 'pantry-tinned-2', name: 'Coconut Milk', majorCategory: 'Pantry', minorCategory: 'Tinned goods' }
       ],
-      'Spices': [
-        { id: 'pantry-spice-1', name: 'Black Pepper', majorCategory: 'Pantry', minorCategory: 'Spices' },
-        { id: 'pantry-spice-2', name: 'Salt', majorCategory: 'Pantry', minorCategory: 'Spices' }
+      'Spices, seasoning & stock': [
+        { id: 'pantry-spice-1', name: 'Black Pepper', majorCategory: 'Pantry', minorCategory: 'Spices, seasoning & stock' },
+        { id: 'pantry-spice-2', name: 'Salt', majorCategory: 'Pantry', minorCategory: 'Spices, seasoning & stock' }
+      ],
+      'Oils & vinegars': [
+        { id: 'pantry-oil-1', name: 'Olive Oil', majorCategory: 'Pantry', minorCategory: 'Oils & vinegars' },
+        { id: 'pantry-oil-2', name: 'Balsamic Vinegar', majorCategory: 'Pantry', minorCategory: 'Oils & vinegars' }
       ]
     },
     Freezer: {
-      'Frozen Vegetables': [
-        { id: 'freezer-veg-1', name: 'Mixed Vegetables', majorCategory: 'Freezer', minorCategory: 'Frozen Vegetables' },
-        { id: 'freezer-veg-2', name: 'Peas', majorCategory: 'Freezer', minorCategory: 'Frozen Vegetables' }
+      'Vegetables (frozen)': [
+        { id: 'freezer-veg-1', name: 'Mixed Vegetables', majorCategory: 'Freezer', minorCategory: 'Vegetables (frozen)' },
+        { id: 'freezer-veg-2', name: 'Peas', majorCategory: 'Freezer', minorCategory: 'Vegetables (frozen)' }
       ],
-      'Frozen Meat': [
-        { id: 'freezer-meat-1', name: 'Frozen Chicken', majorCategory: 'Freezer', minorCategory: 'Frozen Meat' }
+      'Meat (frozen)': [
+        { id: 'freezer-meat-1', name: 'Frozen Chicken', majorCategory: 'Freezer', minorCategory: 'Meat (frozen)' }
+      ],
+      'Bread / wraps (frozen)': [
+        { id: 'freezer-bread-1', name: 'Frozen Bread', majorCategory: 'Freezer', minorCategory: 'Bread / wraps (frozen)' }
       ]
     }
   };
