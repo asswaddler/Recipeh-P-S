@@ -1,0 +1,110 @@
+.day-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.day-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.day-card.is-today {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--color-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.is-today .day-header {
+  background: var(--color-primary);
+  color: white;
+}
+
+.day-label {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.today-indicator {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.meal-slots {
+  display: flex;
+  flex-direction: column;
+}
+
+.meal-slot {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background 0.2s;
+  min-height: 56px;
+}
+
+.meal-slot:last-child {
+  border-bottom: none;
+}
+
+.meal-slot:hover {
+  background: var(--color-secondary);
+}
+
+.meal-slot:active {
+  background: var(--color-secondary-dark);
+}
+
+.meal-slot-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  min-width: 60px;
+}
+
+.meal-slot-recipe {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.recipe-name {
+  font-weight: 500;
+  color: var(--color-text);
+  font-size: 0.9375rem;
+}
+
+.servings-badge {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+}
+
+.meal-slot-empty {
+  flex: 1;
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.meal-slot.empty .meal-slot-empty {
+  opacity: 0.6;
+}
+
+.meal-slot.empty:hover .meal-slot-empty {
+  opacity: 1;
+}
