@@ -24,8 +24,8 @@ interface ApiConfig {
 let apiConfig: ApiConfig = {
   baseUrl: import.meta.env.VITE_API_BASE_URL || '',
   endpoints: {
-    getData: import.meta.env.VITE_API_GET_ENDPOINT !== undefined ? import.meta.env.VITE_API_GET_ENDPOINT : '/exec',
-    savePlan: import.meta.env.VITE_API_SAVE_ENDPOINT !== undefined ? import.meta.env.VITE_API_SAVE_ENDPOINT : '/exec',
+    getData: import.meta.env.VITE_API_GET_ENDPOINT || '/exec',
+    savePlan: import.meta.env.VITE_API_SAVE_ENDPOINT || '/exec',
     saveManualAdditions: import.meta.env.VITE_API_SAVE_MANUAL_ENDPOINT || undefined
   }
 };
@@ -263,11 +263,7 @@ export async function fetchData(
   }
 
   // Fetch from API
-  // If endpoint is empty, use baseUrl directly; otherwise construct URL
-  const endpoint = apiConfig.endpoints.getData || '';
-  const url = endpoint 
-    ? new URL(endpoint, apiConfig.baseUrl)
-    : new URL(apiConfig.baseUrl);
+  const url = new URL(apiConfig.endpoints.getData, apiConfig.baseUrl);
   url.searchParams.set('action', 'getData');
   url.searchParams.set('weekId', weekId);
 
@@ -325,11 +321,7 @@ export async function savePlan(
   weekId: string,
   entries: MealPlanEntry[]
 ): Promise<SavePlanResponse> {
-  // If endpoint is empty, use baseUrl directly; otherwise construct URL
-  const endpoint = apiConfig.endpoints.savePlan || '';
-  const url = endpoint 
-    ? new URL(endpoint, apiConfig.baseUrl)
-    : new URL(apiConfig.baseUrl);
+  const url = new URL(apiConfig.endpoints.savePlan, apiConfig.baseUrl);
 
   const response = await fetch(url.toString(), {
     method: 'POST',
