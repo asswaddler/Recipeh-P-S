@@ -21,11 +21,13 @@ interface ApiConfig {
 }
 
 // Default config - will be overridden by environment or runtime config
+// Note: baseUrl should be the full Apps Script URL ending in /exec
+// endpoints are not used when baseUrl already contains the full path
 let apiConfig: ApiConfig = {
   baseUrl: import.meta.env.VITE_API_BASE_URL || '',
   endpoints: {
-    getData: import.meta.env.VITE_API_GET_ENDPOINT || '/exec',
-    savePlan: import.meta.env.VITE_API_SAVE_ENDPOINT || '/exec',
+    getData: import.meta.env.VITE_API_GET_ENDPOINT || '',
+    savePlan: import.meta.env.VITE_API_SAVE_ENDPOINT || '',
     saveManualAdditions: import.meta.env.VITE_API_SAVE_MANUAL_ENDPOINT || undefined
   }
 };
@@ -263,7 +265,11 @@ export async function fetchData(
   }
 
   // Fetch from API
-  const url = new URL(apiConfig.endpoints.getData, apiConfig.baseUrl);
+  // Build URL: use baseUrl directly if endpoint is empty, otherwise append endpoint
+  const baseUrl = apiConfig.baseUrl;
+  const endpoint = apiConfig.endpoints.getData;
+  const fullUrl = endpoint ? `${baseUrl.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}` : baseUrl;
+  const url = new URL(fullUrl);
   url.searchParams.set('action', 'getData');
   url.searchParams.set('weekId', weekId);
 
@@ -321,7 +327,11 @@ export async function savePlan(
   weekId: string,
   entries: MealPlanEntry[]
 ): Promise<SavePlanResponse> {
-  const url = new URL(apiConfig.endpoints.savePlan, apiConfig.baseUrl);
+  // Build URL: use baseUrl directly if endpoint is empty, otherwise append endpoint
+  const baseUrl = apiConfig.baseUrl;
+  const endpoint = apiConfig.endpoints.savePlan;
+  const fullUrl = endpoint ? `${baseUrl.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}` : baseUrl;
+  const url = new URL(fullUrl);
 
   const response = await fetch(url.toString(), {
     method: 'POST',
