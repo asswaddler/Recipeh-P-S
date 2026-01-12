@@ -123,8 +123,10 @@ function getRecipes() {
 
 /**
  * Get ingredients catalogue from the Ingredients sheet
- * Expected format: Column headers contain "Major - Minor" (e.g., "Fresh - Meat (fresh)")
- * Items are listed in rows under each column
+ * Sheet structure:
+ *   Row 1: Merged major category headers (Fresh, Pantry, Freezer) - SKIP
+ *   Row 2: Column headers in format "Major - Minor" (e.g., "Fresh - Meat (fresh)")
+ *   Row 3+: Ingredient items
  */
 function getIngredientsCatalogue() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.INGREDIENTS);
@@ -137,10 +139,11 @@ function getIngredientsCatalogue() {
     Freezer: {}
   };
 
-  if (data.length < 2) return catalogue;
+  // Need at least 3 rows (merged header, column headers, and data)
+  if (data.length < 3) return catalogue;
 
-  // Header row contains category info in format "Major - Minor"
-  const headers = data[0];
+  // Row 2 (index 1) contains column headers in format "Major - Minor"
+  const headers = data[1];
 
   // Parse headers to determine major/minor categories for each column
   const columnCategories = headers.map(function(header) {
@@ -162,8 +165,8 @@ function getIngredientsCatalogue() {
     return { major: major, minor: minor };
   });
 
-  // Process each data row (skip header)
-  for (let i = 1; i < data.length; i++) {
+  // Process each data row (start from row 3, index 2)
+  for (let i = 2; i < data.length; i++) {
     const row = data[i];
 
     // Process items in each column
