@@ -256,11 +256,19 @@ export function scaleIngredient(
 }
 
 /**
- * Format an ingredient for display
+ * Capitalize the first letter of each word
+ */
+function capitalizeWords(str: string): string {
+  return str.replace(/\b\w/g, char => char.toUpperCase());
+}
+
+/**
+ * Format an ingredient for display (Name first, then quantity/unit)
+ * e.g., "Soy Sauce 1 cup" instead of "1 cup soy sauce"
  */
 export function formatIngredient(ingredient: ParsedIngredient): string {
   if (ingredient.quantity === null) {
-    return ingredient.original || ingredient.name;
+    return capitalizeWords(ingredient.original || ingredient.name);
   }
 
   let quantityStr: string;
@@ -281,11 +289,11 @@ export function formatIngredient(ingredient: ParsedIngredient): string {
     quantityStr = ingredient.quantity.toFixed(2).replace(/\.?0+$/, '');
   }
 
-  const parts = [quantityStr];
+  // Build: Name first, then quantity and unit
+  const parts = [capitalizeWords(ingredient.name), quantityStr];
   if (ingredient.unit) {
     parts.push(ingredient.unit);
   }
-  parts.push(ingredient.name);
 
   return parts.join(' ');
 }
