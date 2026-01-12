@@ -10,12 +10,17 @@ export function RecipeList() {
   const { state } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter recipes by search query
+  // Filter recipes by search query and exclude empty recipes (no ingredients)
   const filteredRecipes = useMemo(() => {
-    if (!searchQuery) return state.recipes;
+    // First filter out recipes with no ingredients (empty/unnamed recipes)
+    const nonEmptyRecipes = state.recipes.filter(
+      recipe => recipe.ingredients.length > 0
+    );
+
+    if (!searchQuery) return nonEmptyRecipes;
 
     const query = searchQuery.toLowerCase();
-    return state.recipes.filter(
+    return nonEmptyRecipes.filter(
       recipe =>
         recipe.name.toLowerCase().includes(query) ||
         recipe.category?.toLowerCase().includes(query) ||
@@ -35,7 +40,12 @@ export function RecipeList() {
       groups[category].push(recipe);
     });
 
-    return Object.entries(groups).sort(([a], [b]) => a.localeCompare(b));
+    // Sort categories alphabetically, but put "Other" at the end
+    return Object.entries(groups).sort(([a], [b]) => {
+      if (a === 'Other') return 1;
+      if (b === 'Other') return -1;
+      return a.localeCompare(b);
+    });
   }, [filteredRecipes]);
 
   const handleRecipeClick = (recipeId: string) => {
