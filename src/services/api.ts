@@ -278,11 +278,12 @@ export async function fetchData(
   if (!catalogue) url.searchParams.set('includeCatalogue', 'true');
   url.searchParams.set('includePlan', 'true'); // Always get fresh plan
 
+  // Note: Do NOT include Content-Type header for GET requests
+  // It triggers CORS preflight which Google Apps Script doesn't handle
   const response = await fetch(url.toString(), {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    mode: 'cors',
+    redirect: 'follow'
   });
 
   if (!response.ok) {
@@ -333,10 +334,13 @@ export async function savePlan(
   const fullUrl = endpoint ? `${baseUrl.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}` : baseUrl;
   const url = new URL(fullUrl);
 
+  // For POST to Google Apps Script, use text/plain to avoid CORS preflight
   const response = await fetch(url.toString(), {
     method: 'POST',
+    mode: 'cors',
+    redirect: 'follow',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'text/plain'
     },
     body: JSON.stringify({
       action: 'savePlan',
@@ -388,8 +392,10 @@ export async function syncManualAdditions(
     const url = new URL(apiConfig.endpoints.saveManualAdditions, apiConfig.baseUrl);
     const response = await fetch(url.toString(), {
       method: 'POST',
+      mode: 'cors',
+      redirect: 'follow',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'text/plain'
       },
       body: JSON.stringify({
         action: 'saveManualAdditions',
